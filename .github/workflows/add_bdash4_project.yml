@@ -1,0 +1,14 @@
+name: Add PR to bdash4 project board
+on:
+  pull_request:
+    types:
+      - opened
+jobs:
+  add-to-project:
+    name: Add pr to project
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/add-to-project@v0.1.0
+        with:
+          project-url: https://github.com/orgs/f-scratch/projects/23
+          github-token: ${{ secrets.BUNDLE_GITHUB__COM }}
