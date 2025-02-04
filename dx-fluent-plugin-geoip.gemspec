@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "dx-fluent-plugin-geoip"
-  spec.version       = "2.2.1"
+  spec.version       = "4.2.0"
   spec.authors       = [""]
   spec.email         = [""]
   spec.summary       = %q{Fluentd Filter plugin to add information about geographical location of IP addresses with Maxmind GeoIP databases.}
@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "geoip2_compat"
 
   spec.add_runtime_dependency "fluentd", [">= 0.14.8", "< 2"]
-  spec.add_runtime_dependency "geoip-c"
+  spec.add_runtime_dependency "maxminddb"
   spec.add_runtime_dependency "geoip2_c"
   spec.add_runtime_dependency "dig_rb"
 end
