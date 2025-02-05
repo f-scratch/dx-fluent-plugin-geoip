@@ -85,9 +85,8 @@ module Fluent::Plugin
         raise Fluent::ConfigError, "Invalid placeholder attributes: #{key}" unless m
         geoip_key = m[:geoip_key]
         case @backend_library
-        when :geoip
         when :geoip2_compat
-          raise Fluent::ConfigError, "#{@backend_librarybackend_library}: unsupported key #{geoip_key}" unless GEOIP2_COMPAT_KEYS.include?(geoip_key)
+          raise Fluent::ConfigError, "#{@backend_library}: unsupported key #{geoip_key}" unless GEOIP2_COMPAT_KEYS.include?(geoip_key)
         when :geoip2_c
           # Nothing to do.
           # We cannot define supported key(s) before we fetch values from GeoIP2 database
