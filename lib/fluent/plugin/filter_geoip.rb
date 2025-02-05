@@ -13,6 +13,7 @@ end
 
 module Fluent::Plugin
   class GeoipFilter < Fluent::Plugin::Filter
+    Fluent::Plugin.register_filter('geoip', self)
 
     BACKEND_LIBRARIES = [:geoip2_compat, :geoip2_c]
 
