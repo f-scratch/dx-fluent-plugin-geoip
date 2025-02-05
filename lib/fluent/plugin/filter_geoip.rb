@@ -15,7 +15,7 @@ module Fluent::Plugin
   class GeoipFilter < Fluent::Plugin::Filter
     Fluent::Plugin.register_filter('geoip', self)
 
-    BACKEND_LIBRARIES = [:geoip, :geoip2_compat, :geoip2_c]
+    BACKEND_LIBRARIES = [:geoip2_compat, :geoip2_c]
 
     REGEXP_PLACEHOLDER_SINGLE = /^\$\{
                                   (?<geoip_key>-?[^\[\]]+)
@@ -27,12 +27,10 @@ module Fluent::Plugin
                                   \}$/x
     REGEXP_PLACEHOLDER_SCAN = /['"]?(\$\{[^\}]+?\})['"]?/
 
-    GEOIP_KEYS = %w(city latitude longitude country_code3 country_code country_name dma_code area_code region)
     GEOIP2_COMPAT_KEYS = %w(city country_code country_name latitude longitude postal_code region region_name)
 
     helpers :compat_parameters, :inject, :record_accessor
 
-    config_param :geoip_database, :string, default: File.expand_path('../../../data/GeoLiteCity.dat', __dir__)
     config_param :geoip2_database, :string, default: File.expand_path('../../../data/GeoLite2-City.mmdb', __dir__)
     config_param :geoip_lookup_keys, :array, value_type: :string, default: ["host"]
     config_param :geoip_lookup_key, :string, default: nil, deprecated: "Use geoip_lookup_keys instead"
@@ -88,8 +86,6 @@ module Fluent::Plugin
         raise Fluent::ConfigError, "Invalid placeholder attributes: #{key}" unless m
         geoip_key = m[:geoip_key]
         case @backend_library
-        when :geoip
-          raise Fluent::ConfigError, "#{@backend_library}: unsupported key #{geoip_key}" unless GEOIP_KEYS.include?(geoip_key)
         when :geoip2_compat
           raise Fluent::ConfigError, "#{@backend_library}: unsupported key #{geoip_key}" unless GEOIP2_COMPAT_KEYS.include?(geoip_key)
         when :geoip2_c
