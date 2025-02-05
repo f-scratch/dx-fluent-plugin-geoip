@@ -1,6 +1,5 @@
 require 'fluent/plugin/filter'
 
-require 'geoip'
 require 'yajl'
 unless {}.respond_to?(:dig)
   begin
@@ -203,8 +202,6 @@ module Fluent::Plugin
 
     def load_database
       case @backend_library
-      when :geoip
-        ::GeoIP::City.new(@geoip_database, :memory, false)
       when :geoip2_compat
         require 'geoip2_compat'
         GeoIP2Compat.new(@geoip2_database)
